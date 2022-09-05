@@ -5,13 +5,12 @@ import { fetchCurrentWeather } from "../../store/slices/current.slice";
 import { toggleTheme } from "../../store/slices/theme.slice";
 
 export const useHandleSearchChange = () => {
-  const [searchCity, setSearchCity] = useState("Belgrade, RS");
+  const [searchCity, setSearchCity] = useState("");
   const dispatch = useAppDispatch();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const search = useCallback(
-    debounce((serachText: string) => {
-      let searchCity = serachText ? serachText : "Belgrade, RS";
-      search(searchCity);
+    debounce((searchTxt: string) => {
+      dispatch(fetchCurrentWeather(searchTxt || "Belgrade, RS"))
     }, 1000),
     []
   );
@@ -19,18 +18,12 @@ export const useHandleSearchChange = () => {
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const searchCity = (event.currentTarget as HTMLInputElement).value;
     setSearchCity(searchCity);
+    search(searchCity);
   };
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      dispatch(fetchCurrentWeather(searchCity));
-    }, 120000);
-    dispatch(fetchCurrentWeather(searchCity));
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, [dispatch, searchCity]);
+    dispatch(fetchCurrentWeather('Belgrade, RS'));
+  }, [dispatch]);
 
   return { searchCity, handleSearchChange };
 };

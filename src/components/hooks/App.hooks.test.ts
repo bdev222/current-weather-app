@@ -40,7 +40,7 @@ describe("App hooks", () => {
       );
     });
     await new Promise((r) => setTimeout(r, 1500));
-    expect(mockDispatch).toBeCalledTimes(1);
+    expect(mockDispatch).toBeCalledTimes(2);
     expect(mockfetchCurrent).toBeCalledWith("Belgrade, RS");
   });
 

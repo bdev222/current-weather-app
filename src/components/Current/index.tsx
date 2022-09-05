@@ -86,7 +86,9 @@ const Current = () => {
           `}
         >
           <h1 className="Current__City">
-            {data
+            {
+              loading ? "Loading" 
+              : data
               ? `${data.city_name}, ${data.country_code}`
               : "Data Not Available"}
           </h1>
